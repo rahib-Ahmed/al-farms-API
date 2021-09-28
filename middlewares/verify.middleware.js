@@ -33,7 +33,7 @@ exports.auth = async (req, res, next) => {
 exports.checkPhone = async (req, res, next)  => {
     try{
         if(req.params.phone) {
-            const userObject = await usersModel.findOne({phone: parseInt(req.params.phone)})
+            const userObject = await usersModel.findOne({phone: req.params.phone})
             if(userObject) {
                 next()
             } else {

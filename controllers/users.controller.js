@@ -33,7 +33,6 @@ exports.signupUser = async(req, res) => {
                 .exists()
                 .withMessage(PASS_ERR),
             body('phone')
-                .isNumeric()
                 .exists()
                 .withMessage(CONTACT_ERR)
                 .custom(phoneValidator),
@@ -167,15 +166,15 @@ exports.loginWithEmail = async(req, res) => {
                 });
         }
         const user = await usersModel.findOne({email: req.body.email, isVerified: true})
-        
-        if(user) {
+
+        if (user) {
             const token = await createToken(user, '120000d')
             return res
                 .status(200)
                 .send(token)
         } else {
-            throw(NOT_EXIST + ' or '+ UNVERIFIED)
-}
+            throw(NOT_EXIST + ' or ' + UNVERIFIED)
+        }
     } catch (err) {
         logger("error", req, err, lineNumber.__line);
         return res
@@ -212,10 +211,10 @@ exports.resendOtp = async(req, res) => {
 
         const verificationCode = await randomNumber()
         const userObject = await usersModel.findOneAndUpdate({
-            phone: parseInt(req.params.phone)
+            phone: req.params.phone
         }, {
             $set: {
-                otp: verificationCode
+                verificationCode: verificationCode
             }
         }, {new: true})
         if (userObject) {

@@ -38,7 +38,7 @@ app.use('/user', require('./routes/users.route'));
 // // // app.use('/student', usersRouter);
 // app.use('/signup', require('./routes/signup.route'));
 // app.use('/course', require('./routes/course.route'));
-// app.use('/review', require('./routes/review.route'))
+app.use('/review', require('./routes/review.route'))
 app.use((_req, res) => {
     res
         .status(404)
